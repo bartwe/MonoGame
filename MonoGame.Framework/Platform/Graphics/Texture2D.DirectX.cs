@@ -194,6 +194,12 @@ namespace Microsoft.Xna.Framework.Graphics
                     SharpDX.Utilities.Dispose( ref stream);
 
                     d3dContext.UnmapSubresource(_cachedStagingTexture, 0);
+                    
+                    // TNC: Do not cache StagingTexture to keep memory requirements low.
+                    //      First call to GetData() will create a stagingResource anyway because we don't pool staging resources.
+                    //      Instead of calling GetData() again (or once per frame?) the user can cache the returned data which is faster that calling GetData().
+                    //      Also, most of the time is spend on copying the data, not creating the managed resource.
+                    SharpDX.Utilities.Dispose(ref _cachedStagingTexture);
                 }
             }
         }
