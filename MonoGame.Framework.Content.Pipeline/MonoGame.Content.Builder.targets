@@ -21,6 +21,7 @@
     <PropertyGroup>
 
       <ContentRootDirectory Condition=" '$(ContentRootDirectory)' == '' " >Content</ContentRootDirectory>
+	  <MonoGamePlatform>Switch</MonoGamePlatform>
       <ParentOutputDir Condition=" '$(ParentOutputDir)' == '' " >$(ProjectDir)$(ContentRootDirectory)\bin\$(MonoGamePlatform)</ParentOutputDir>
       <ParentIntermediateDir Condition=" '$(ParentIntermediateDir)' == '' " >$(ProjectDir)$(ContentRootDirectory)\obj\$(MonoGamePlatform)</ParentIntermediateDir>
 
@@ -63,6 +64,7 @@
 			'$(MonoGamePlatform)' != 'PlayStation4' And       
 			'$(MonoGamePlatform)' != 'PSVita' And       
 			'$(MonoGamePlatform)' != 'XboxOne' And       
+			'$(MonoGamePlatform)' != 'Switch' And       
 			'$(MonoGamePlatform)' != 'WindowsGL'" />
 
     <Error
