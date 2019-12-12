@@ -66,7 +66,7 @@ namespace TwoMGFX
             Patterns.Add(TokenType.Technique, regex);
             Tokens.Add(TokenType.Technique);
 
-            regex = new Regex(@"sampler1D|sampler2D|sampler3D|samplerCUBE|SamplerState|sampler", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            regex = new Regex(@"sampler1D|sampler2D|sampler2DArray|sampler3D|samplerCUBE|SamplerState|sampler", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             Patterns.Add(TokenType.Sampler, regex);
             Tokens.Add(TokenType.Sampler);
 
