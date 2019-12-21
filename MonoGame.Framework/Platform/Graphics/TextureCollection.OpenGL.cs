@@ -23,8 +23,6 @@ namespace Microsoft.Xna.Framework.Graphics
 
         void PlatformSetTextures(GraphicsDevice device)
         {
-            System.Console.Error.WriteLine("A");
-            GraphicsExtensions.CheckGLError();
             // Skip out if nothing has changed.
             if (_dirty == 0)
                 return;
@@ -37,10 +35,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 var tex = _textures[i];
 
-                System.Console.Error.WriteLine("B.1 " + i);
-                GraphicsExtensions.CheckGLError();
                 GL.ActiveTexture(TextureUnit.Texture0 + i);
-                System.Console.Error.WriteLine("B "+i);
                 GraphicsExtensions.CheckGLError();
 
                 // Clear the previous binding if the 
@@ -49,7 +44,6 @@ namespace Microsoft.Xna.Framework.Graphics
                 {
                     GL.BindTexture(_targets[i], 0);
                     _targets[i] = 0;
-                    System.Console.Error.WriteLine("C");
                     GraphicsExtensions.CheckGLError();
                 }
 
@@ -57,7 +51,6 @@ namespace Microsoft.Xna.Framework.Graphics
                 {
                     _targets[i] = tex.glTarget;
                     GL.BindTexture(tex.glTarget, tex.glTexture);
-                    System.Console.Error.WriteLine("D");
                     GraphicsExtensions.CheckGLError();
 
                     unchecked

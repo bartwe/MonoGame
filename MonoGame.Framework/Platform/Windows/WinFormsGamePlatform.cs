@@ -21,7 +21,6 @@ namespace MonoGame.Framework
         public WinFormsGamePlatform(Game game)
             : base(game)
         {
-            Console.Error.WriteLine("WinFormsGamePlatform.ctor");
             _window = new WinFormsGameWindow(this);
 
             Window = _window;
