@@ -142,6 +142,7 @@ namespace MonoGame.Framework
 
         internal WinFormsGameWindow(WinFormsGamePlatform platform)
         {
+            Console.Error.WriteLine("WinFormsGameWindow.ctor");
             _platform = platform;
             Game = platform.Game;
 

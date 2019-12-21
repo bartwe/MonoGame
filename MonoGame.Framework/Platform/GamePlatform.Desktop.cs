@@ -14,6 +14,7 @@ namespace Microsoft.Xna.Framework
     {
         internal static GamePlatform PlatformCreate(Game game)
         {
+            Console.Error.WriteLine("GamePlatform.PlatformCreate");
 #if DESKTOPGL || ANGLE
             return new SdlGamePlatform(game);
 #elif WINDOWS && DIRECTX

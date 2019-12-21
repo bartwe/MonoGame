@@ -110,7 +110,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
             // TODO: Implement OpenGL support for texture arrays
             // once we can author shaders that use texture arrays.
-            SupportsTextureArrays = false;
+            SupportsTextureArrays = true;
 
             SupportsDepthClamp = GL.Extensions.Contains("GL_ARB_depth_clamp");
 
