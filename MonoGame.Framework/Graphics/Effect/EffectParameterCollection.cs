@@ -16,8 +16,13 @@ namespace Microsoft.Xna.Framework.Graphics
             for (int i = 0; i < _parameters.Length; i++)
             {
                 string name = _parameters[i].Name;
-                if(!string.IsNullOrWhiteSpace(name))
+                if (!string.IsNullOrWhiteSpace(name)) {
                     _indexLookup.Add(name, i);
+                    if (name.Contains("+")) {
+                        name = name.Substring(name.LastIndexOf("+") + 1);
+                        _indexLookup.Add(name, i);
+                    }
+                }
             }
         }
 
