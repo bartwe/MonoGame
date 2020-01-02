@@ -33,8 +33,10 @@ namespace Microsoft.Xna.Framework.Graphics
                     desc.DepthWriteMask = SharpDX.Direct3D11.DepthWriteMask.Zero;
 
                 desc.IsStencilEnabled = StencilEnable;
-                desc.StencilReadMask = (byte)StencilMask; // TODO: Should this instead grab the upper 8bits?
-                desc.StencilWriteMask = (byte)StencilWriteMask;
+                unchecked {
+                    desc.StencilReadMask = (byte)StencilMask; // TODO: Should this instead grab the upper 8bits?
+                    desc.StencilWriteMask = (byte)StencilWriteMask;
+                }
 
                 if (TwoSidedStencilMode)
                 {
