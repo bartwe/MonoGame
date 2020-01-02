@@ -14,6 +14,7 @@ namespace Microsoft.Xna.Framework.Graphics
         private unsafe static Texture2D PlatformFromStream(GraphicsDevice graphicsDevice, Stream stream)
         {
             byte[] bytes;
+            int length;
 
             // Rewind stream if it is at end
             if (stream.CanSeek && stream.Length == stream.Position)
@@ -26,11 +27,12 @@ namespace Microsoft.Xna.Framework.Graphics
             using (var ms = new MemoryStream())
             {
                 stream.CopyTo(ms);
-                bytes = ms.ToArray();
+                bytes = ms.GetBuffer();
+                length = (int)ms.Length;
             }
 
             // The data returned is always four channel BGRA
-            var result = ImageResult.FromMemory(bytes, StbImageSharp.ColorComponents.RedGreenBlueAlpha);
+            var result = ImageResult.FromMemory(bytes, length, StbImageSharp.ColorComponents.RedGreenBlueAlpha);
 
             // XNA blacks out any pixels with an alpha of zero.
             fixed (byte* b = &result.Data[0])
