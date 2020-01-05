@@ -65,7 +65,6 @@ namespace Microsoft.Xna.Framework.Content
 			}
 			
             texture = existingInstance ?? new Texture2D(reader.GetGraphicsDevice(), width, height, levelCountOutput > 1, convertedFormat);
-            Threading.EnsureUIThread();
             
                 for (int level = 0; level < levelCount; level++)
 			    {

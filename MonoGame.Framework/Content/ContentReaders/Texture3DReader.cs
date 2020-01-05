@@ -24,7 +24,6 @@ namespace Microsoft.Xna.Framework.Content
             else
                 texture = existingInstance;
 
-            Threading.EnsureUIThread();
                 for (int i = 0; i < levelCount; i++)
                 {
                     int dataSize = reader.ReadInt32();

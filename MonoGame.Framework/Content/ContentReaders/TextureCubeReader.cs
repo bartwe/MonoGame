@@ -23,7 +23,6 @@ namespace Microsoft.Xna.Framework.Content
             else
                 textureCube = existingInstance;
 
-            Threading.EnsureUIThread();
             for (int face = 0; face < 6; face++)
                 {
                     for (int i = 0; i < levels; i++)
