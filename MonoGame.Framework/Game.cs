@@ -48,7 +48,7 @@ namespace Microsoft.Xna.Framework
         private bool _initialized = false;
         private bool _isFixedTimeStep = true;
 
-        private TimeSpan _targetElapsedTime = TimeSpan.FromTicks(166667); // 60fps
+        private TimeSpan _targetElapsedTime = TimeSpan.FromTicks(166666); // 60fps
         private TimeSpan _inactiveSleepTime = TimeSpan.FromSeconds(0.02);
 
         private TimeSpan _maxElapsedTime = TimeSpan.FromMilliseconds(500);
