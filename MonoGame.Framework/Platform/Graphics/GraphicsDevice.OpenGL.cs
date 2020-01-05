@@ -117,7 +117,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         private static BufferBindingInfo[] _bufferBindingInfos;
         private static bool[] _newEnabledVertexAttributes;
-        internal static readonly List<int> _enabledVertexAttributes = new List<int>();
+        internal static readonly List<bool> _enabledVertexAttributes = new List<bool>();
         internal static bool _attribsDirty;
 
         internal FramebufferHelper framebufferHelper;
@@ -155,17 +155,19 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal void SetVertexAttributeArray(bool[] attrs)
         {
+            while (attrs.Length > _enabledVertexAttributes.Count)
+                _enabledVertexAttributes.Add(false);
             for (var x = 0; x < attrs.Length; x++)
             {
-                if (attrs[x] && !_enabledVertexAttributes.Contains(x))
+                if (attrs[x] && !_enabledVertexAttributes[x])
                 {
-                    _enabledVertexAttributes.Add(x);
+                    _enabledVertexAttributes[x] = true;
                     GL.EnableVertexAttribArray(x);
                     GraphicsExtensions.CheckGLError();
                 }
-                else if (!attrs[x] && _enabledVertexAttributes.Contains(x))
+                else if (!attrs[x] && _enabledVertexAttributes[x])
                 {
-                    _enabledVertexAttributes.Remove(x);
+                    _enabledVertexAttributes[x] = false;
                     GL.DisableVertexAttribArray(x);
                     GraphicsExtensions.CheckGLError();
                 }
