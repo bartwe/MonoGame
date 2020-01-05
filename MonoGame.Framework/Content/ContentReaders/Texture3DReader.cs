@@ -24,10 +24,7 @@ namespace Microsoft.Xna.Framework.Content
             else
                 texture = existingInstance;
 
-#if OPENGL
-            Threading.BlockOnUIThread(() =>
-            {
-#endif
+            Threading.EnsureUIThread();
                 for (int i = 0; i < levelCount; i++)
                 {
                     int dataSize = reader.ReadInt32();
@@ -40,9 +37,6 @@ namespace Microsoft.Xna.Framework.Content
                     height = Math.Max(height >> 1, 1);
                     depth = Math.Max(depth >> 1, 1);
                 }
-#if OPENGL
-            });
-#endif
 
             return texture;
         }

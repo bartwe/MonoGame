@@ -17,7 +17,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
         private void PlatformConstruct(IndexElementSize indexElementSize, int indexCount)
         {
-            Threading.BlockOnUIThread(GenerateIfRequired);
+            Threading.EnsureUIThread();
+            GenerateIfRequired();
         }
 
         private void PlatformGraphicsDeviceResetting()
@@ -52,14 +53,8 @@ namespace Microsoft.Xna.Framework.Graphics
             throw new NotSupportedException("Index buffers are write-only on OpenGL ES platforms");
 #endif
 #if !GLES
-            if (Threading.IsOnUIThread())
-            {
+                Threading.EnsureUIThread();
                 GetBufferData(offsetInBytes, data, startIndex, elementCount);
-            }
-            else
-            {
-                Threading.BlockOnUIThread(() => GetBufferData(offsetInBytes, data, startIndex, elementCount));
-            }
 #endif
         }
 
@@ -95,14 +90,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
         private void PlatformSetDataInternal<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, SetDataOptions options) where T : struct
         {
-            if (Threading.IsOnUIThread())
-            {
-                BufferData(offsetInBytes, data, startIndex, elementCount, options);
-            }
-            else
-            {
-                Threading.BlockOnUIThread(() => BufferData(offsetInBytes, data, startIndex, elementCount, options));
-            }
+            Threading.EnsureUIThread();
+            BufferData(offsetInBytes, data, startIndex, elementCount, options);
         }
 
         private void BufferData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, SetDataOptions options) where T : struct

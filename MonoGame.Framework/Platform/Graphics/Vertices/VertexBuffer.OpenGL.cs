@@ -18,7 +18,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
         private void PlatformConstruct()
         {
-            Threading.BlockOnUIThread(GenerateIfRequired);
+            Threading.EnsureUIThread();
+            GenerateIfRequired();
         }
 
         private void PlatformGraphicsDeviceResetting()
@@ -53,7 +54,8 @@ namespace Microsoft.Xna.Framework.Graphics
             // http://www.khronos.org/registry/gles/extensions/OES/OES_mapbuffer.txt
             throw new NotSupportedException("Vertex buffers are write-only on OpenGL ES platforms");
 #else
-            Threading.BlockOnUIThread (() => GetBufferData(offsetInBytes, data, startIndex, elementCount, vertexStride));
+            Threading.EnsureUIThread();
+             GetBufferData(offsetInBytes, data, startIndex, elementCount, vertexStride);
 #endif
         }
 
@@ -108,7 +110,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
         private void PlatformSetDataInternal<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride, SetDataOptions options, int bufferSize, int elementSizeInBytes) where T : struct
         {
-            Threading.BlockOnUIThread(() => SetBufferData(bufferSize, elementSizeInBytes, offsetInBytes, data, startIndex, elementCount, vertexStride, options));
+            Threading.EnsureUIThread();
+            SetBufferData(bufferSize, elementSizeInBytes, offsetInBytes, data, startIndex, elementCount, vertexStride, options);
         }
 
         private void SetBufferData<T>(int bufferSize, int elementSizeInBytes, int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride, SetDataOptions options) where T : struct

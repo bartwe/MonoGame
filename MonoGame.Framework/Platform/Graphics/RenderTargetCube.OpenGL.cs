@@ -29,10 +29,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
         private void PlatformConstruct(GraphicsDevice graphicsDevice, bool mipMap, DepthFormat preferredDepthFormat, int preferredMultiSampleCount, RenderTargetUsage usage)
         {
-            Threading.BlockOnUIThread(() =>
-            {
-                graphicsDevice.PlatformCreateRenderTarget(this, size, size, mipMap, this.Format, preferredDepthFormat, preferredMultiSampleCount, usage);
-            });
+            Threading.EnsureUIThread();
+            graphicsDevice.PlatformCreateRenderTarget(this, size, size, mipMap, this.Format, preferredDepthFormat, preferredMultiSampleCount, usage);
         }
 
         protected override void Dispose(bool disposing)
@@ -41,10 +39,9 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 if (GraphicsDevice != null)
                 {
-                    Threading.BlockOnUIThread(() =>
-                    {
-                        this.GraphicsDevice.PlatformDeleteRenderTarget(this);
-                    });
+                    Threading.EnsureUIThread();
+                    this.GraphicsDevice.PlatformDeleteRenderTarget(this);
+
                 }
             }
 

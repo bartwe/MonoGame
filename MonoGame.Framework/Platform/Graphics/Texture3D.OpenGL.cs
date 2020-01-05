@@ -19,9 +19,8 @@ namespace Microsoft.Xna.Framework.Graphics
 #else
             this.glTarget = TextureTarget.Texture3D;
 
-            Threading.BlockOnUIThread(() =>
-            {
-                GL.GenTextures(1, out this.glTexture);
+            Threading.EnsureUIThread();
+            GL.GenTextures(1, out this.glTexture);
                 GraphicsExtensions.CheckGLError();
 
                 GL.BindTexture(glTarget, glTexture);
@@ -31,7 +30,6 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 GL.TexImage3D(glTarget, 0, glInternalFormat, width, height, depth, 0, glFormat, glType, IntPtr.Zero);
                 GraphicsExtensions.CheckGLError();
-            });
 
             if (mipMap)
                 throw new NotImplementedException("Texture3D does not yet support mipmaps.");
@@ -45,9 +43,8 @@ namespace Microsoft.Xna.Framework.Graphics
 #if GLES
             throw new NotSupportedException("OpenGL ES 2.0 doesn't support 3D textures.");
 #else
-            Threading.BlockOnUIThread(() =>
-            {
-                var elementSizeInByte = Marshal.SizeOf(typeof(T));
+            Threading.EnsureUIThread();
+            var elementSizeInByte = Marshal.SizeOf(typeof(T));
                 var dataHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
                 var dataPtr = (IntPtr)(dataHandle.AddrOfPinnedObject().ToInt64() + startIndex * elementSizeInByte);
 
@@ -57,7 +54,6 @@ namespace Microsoft.Xna.Framework.Graphics
                 GraphicsExtensions.CheckGLError();
 
                 dataHandle.Free();
-            });
 #endif
         }
 

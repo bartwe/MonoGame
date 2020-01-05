@@ -65,10 +65,8 @@ namespace Microsoft.Xna.Framework.Content
 			}
 			
             texture = existingInstance ?? new Texture2D(reader.GetGraphicsDevice(), width, height, levelCountOutput > 1, convertedFormat);
-#if OPENGL
-            Threading.BlockOnUIThread(() =>
-            {
-#endif
+            Threading.EnsureUIThread();
+            
                 for (int level = 0; level < levelCount; level++)
 			    {
 				    var levelDataSizeInBytes = reader.ReadInt32();
@@ -171,9 +169,6 @@ namespace Microsoft.Xna.Framework.Content
 				
                     texture.SetData(level, null, levelData, 0, levelDataSizeInBytes);
 			    }
-#if OPENGL
-            });
-#endif
         			
 			return texture;
 		}

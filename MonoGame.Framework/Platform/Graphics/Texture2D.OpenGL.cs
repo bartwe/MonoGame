@@ -32,9 +32,8 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             this.glTarget = TextureTarget.Texture2D;
             format.GetGLFormat(GraphicsDevice, out glInternalFormat, out glFormat, out glType);
-            Threading.BlockOnUIThread(() =>
-            {
-                GenerateGLTextureIfRequired();
+            Threading.EnsureUIThread();
+            GenerateGLTextureIfRequired();
                 int w = width;
                 int h = height;
                 int level = 0;
@@ -79,16 +78,15 @@ namespace Microsoft.Xna.Framework.Graphics
                         h = h / 2;
                     ++level;
                 }
-            });
+
         }
 
         private void PlatformSetData<T>(int level, T[] data, int startIndex, int elementCount) where T : struct
         {
             int w, h;
             GetSizeForLevel(Width, Height, level, out w, out h);
-            Threading.BlockOnUIThread(() =>
-            {
-                var elementSizeInByte = ReflectionHelpers.SizeOf<T>.Get();
+            Threading.EnsureUIThread();
+            var elementSizeInByte = ReflectionHelpers.SizeOf<T>.Get();
                 var dataHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
                 // Use try..finally to make sure dataHandle is freed in case of an error
                 try
@@ -134,14 +132,13 @@ namespace Microsoft.Xna.Framework.Graphics
                 {
                     dataHandle.Free();
                 }
-            });
+
         }
 
         private void PlatformSetData<T>(int level, int arraySlice, Rectangle rect, T[] data, int startIndex, int elementCount) where T : struct
         {
-            Threading.BlockOnUIThread(() =>
-            {
-                var elementSizeInByte = ReflectionHelpers.SizeOf<T>.Get();
+            Threading.EnsureUIThread();
+            var elementSizeInByte = ReflectionHelpers.SizeOf<T>.Get();
                 var dataHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
                 // Use try..finally to make sure dataHandle is freed in case of an error
                 try
@@ -189,7 +186,6 @@ namespace Microsoft.Xna.Framework.Graphics
                 {
                     dataHandle.Free();
                 }
-            });
         }
 
         private void PlatformGetData<T>(int level, int arraySlice, Rectangle rect, T[] data, int startIndex, int elementCount) where T : struct

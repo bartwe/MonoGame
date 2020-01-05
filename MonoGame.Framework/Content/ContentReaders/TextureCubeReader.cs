@@ -23,11 +23,8 @@ namespace Microsoft.Xna.Framework.Content
             else
                 textureCube = existingInstance;
 
-#if OPENGL
-            Threading.BlockOnUIThread(() =>
-            {
-#endif
-                for (int face = 0; face < 6; face++)
+            Threading.EnsureUIThread();
+            for (int face = 0; face < 6; face++)
                 {
                     for (int i = 0; i < levels; i++)
                     {
@@ -37,9 +34,7 @@ namespace Microsoft.Xna.Framework.Content
                         textureCube.SetData<byte>((CubeMapFace)face, i, null, faceData, 0, faceSize);
                     }
                 }
-#if OPENGL
-            });
-#endif
+
 
              return textureCube;
         }
