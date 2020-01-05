@@ -1189,6 +1189,13 @@ namespace Microsoft.Xna.Framework.Graphics
             var indexElementCount = GetElementCountArray(primitiveType, primitiveCount);
             var target = PrimitiveTypeGL(primitiveType);
 
+            //TNC: temp fix for: Instanced geometry not visible / working on OpenGL when drawing non-instanced geometry with it
+            //TNC: https://github.com/MonoGame/MonoGame/issues/6293
+            //TNC: https://github.com/MonoGame/MonoGame/issues/6306
+            //TNC: https://github.com/MonoGame/MonoGame/pull/6302
+            //https://github.com/nkast/MonoGame/commit/155a55be4db7e0ce19aada85225472cde557bc68
+            _attribsDirty = true;
+
             ApplyAttribs(_vertexShader, baseVertex);
 
             GL.DrawElementsInstanced(target,
