@@ -103,3 +103,4 @@ IDE/MonoDevelop/MonoDevelop.MonoGame/templates/Common/MonoGame.Framework.dll.con
 # CAKE
 Cake/**
 !Cake/packages.config
+/MonoGame.Framework.Content.Pipeline/Tools/
