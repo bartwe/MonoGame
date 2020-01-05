@@ -24,12 +24,17 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal void PlatformSetSamplers(GraphicsDevice device)
         {
-            for (var i = 0; i < _actualSamplers.Length; i++)
+            var actualSamplers = _actualSamplers;
+            var actualSamplersLength = actualSamplers.Length;
+            var textures = device.Textures;
+            for (var i = 0; i < actualSamplersLength; i++)
             {
-                var sampler = _actualSamplers[i];
-                var texture = device.Textures[i];
+                var texture = textures[i];
+                if (texture == null)
+                    continue;
+                var sampler = actualSamplers[i];
 
-                if (sampler != null && texture != null && sampler != texture.glLastSamplerState)
+                if (sampler != null && sampler != texture.glLastSamplerState)
                 {
                     // TODO: Avoid doing this redundantly (see TextureCollection.SetTextures())
                     // However, I suspect that rendering from the same texture with different sampling modes
