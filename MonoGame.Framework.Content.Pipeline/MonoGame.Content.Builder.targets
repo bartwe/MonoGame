@@ -21,7 +21,6 @@
     <PropertyGroup>
 
       <ContentRootDirectory Condition=" '$(ContentRootDirectory)' == '' " >Content</ContentRootDirectory>
-	  <MonoGamePlatform>Switch</MonoGamePlatform>
       <ParentOutputDir Condition=" '$(ParentOutputDir)' == '' " >$(ProjectDir)$(ContentRootDirectory)\bin\$(MonoGamePlatform)</ParentOutputDir>
       <ParentIntermediateDir Condition=" '$(ParentIntermediateDir)' == '' " >$(ProjectDir)$(ContentRootDirectory)\obj\$(MonoGamePlatform)</ParentIntermediateDir>
 
