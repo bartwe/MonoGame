@@ -48,7 +48,7 @@ namespace MGCB
             // Print a startup message.            
             var buildStarted = DateTime.Now;
             if (!content.Quiet)
-                Console.WriteLine("Build started {0}\n", buildStarted);
+                Console.WriteLine("Build started {0} Build.bartwe.1\n", buildStarted);
 
             // Let the content build.
             int successCount, errorCount;

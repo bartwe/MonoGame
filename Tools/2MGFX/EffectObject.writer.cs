@@ -152,6 +152,8 @@ namespace TwoMGFX
             writer.Write((byte)class_);
             writer.Write((byte)type);
 
+            Console.WriteLine("Registering parameter: "+ param.name);
+
             writer.Write(param.name);
             writer.Write(param.semantic);
             WriteAnnotations(writer, param.annotation_handles);
