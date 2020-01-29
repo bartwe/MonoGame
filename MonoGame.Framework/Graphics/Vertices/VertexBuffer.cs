@@ -175,7 +175,11 @@ namespace Microsoft.Xna.Framework.Graphics
             var elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
             SetDataInternal<T>(0, data, startIndex, elementCount, elementSizeInBytes, SetDataOptions.None);
 		}
-		
+
+        public unsafe void SetDataEXT(void* data, int targetOffsetInBytes, int lengthInBytes, SetDataOptions options) {
+            PlatformSetDataInternal(data, targetOffsetInBytes, lengthInBytes, options);
+        }
+
         /// <summary>
         /// Sets the vertex buffer data. This is the same as calling <see cref="SetData{T}(int, T[], int, int, int)"/> 
         /// with <c>offsetInBytes</c> and <c>startIndex</c> equal to <c>0</c>, <c>elementCount</c> equal to <c>data.Length</c>, 

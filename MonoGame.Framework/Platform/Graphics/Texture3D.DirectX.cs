@@ -88,6 +88,24 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
+        private unsafe void PlatformSetData(int level,
+                             int left, int top, int right, int bottom, int front, int back,
+                             void* data, int width, int height, int depth) {
+            var dataPtr = (IntPtr)data;
+
+            int rowPitch = GetPitch(width);
+            int slicePitch = rowPitch * height; // For 3D texture: Size of 2D image.
+            var box = new DataBox(dataPtr, rowPitch, slicePitch);
+
+            int subresourceIndex = level;
+
+            var region = new ResourceRegion(left, top, front, right, bottom, back);
+
+            var d3dContext = GraphicsDevice._d3dContext;
+            lock (d3dContext)
+                d3dContext.UpdateSubresource(box, GetTexture(), subresourceIndex, region);
+        }
+
         private void PlatformGetData<T>(int level, int left, int top, int right, int bottom, int front, int back, T[] data, int startIndex, int elementCount)
              where T : struct
         {
