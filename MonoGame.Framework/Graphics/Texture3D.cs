@@ -81,6 +81,18 @@ namespace Microsoft.Xna.Framework.Graphics
             PlatformSetData(level, left, top, right, bottom, front, back, data, startIndex, elementCount, width, height, depth);
 		}
 
+        public unsafe void SetDataEXT(int level,
+                        int left, int top, int right, int bottom, int front, int back,
+                        void* data) {
+            ValidateParams(level, left, top, right, bottom, front, back, data);
+
+            var width = right - left;
+            var height = bottom - top;
+            var depth = back - front;
+
+            PlatformSetData(level, left, top, right, bottom, front, back, data, width, height, depth);
+        }
+
         /// <summary>
         /// Gets a copy of 3D texture data, specifying a mipmap level, source box, start index, and number of elements.
         /// </summary>
@@ -160,6 +172,23 @@ namespace Microsoft.Xna.Framework.Graphics
                                             "elementCount * sizeof(T) is {0}, but data size is {1}.",
                                             elementCount * tSize, dataByteSize), "elementCount");
         }
-	}
+        private unsafe void ValidateParams(int level,
+                        int left, int top, int right, int bottom, int front, int back,
+                        void* data) {
+            var texWidth = Math.Max(Width >> level, 1);
+            var texHeight = Math.Max(Height >> level, 1);
+            var texDepth = Math.Max(Depth >> level, 1);
+
+            if (left < 0 || top < 0 || back < 0 || right > texWidth || bottom > texHeight || front > texDepth)
+                throw new ArgumentException("Area must remain inside texture bounds");
+            // Disallow negative box size
+            if (left >= right || top >= bottom || front >= back)
+                throw new ArgumentException("Neither box size nor box position can be negative");
+            if (level < 0 || level >= LevelCount)
+                throw new ArgumentException("level must be smaller than the number of levels in this texture.");
+            if (data == (void*)0)
+                throw new ArgumentNullException("data");
+        }
+    }
 }
 
