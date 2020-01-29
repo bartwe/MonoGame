@@ -183,6 +183,27 @@ namespace Microsoft.Xna.Framework.Graphics
 
         }
 
+        public unsafe void PlatformSetDataInternal(void* data, int targetOffsetInBytes, int lengthInBytes, int bufferSize, SetDataOptions options) {
+            GenerateIfRequired();
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+            GraphicsExtensions.CheckGLError();
+
+            if (options == SetDataOptions.Discard) {
+                // By assigning NULL data to the buffer this gives a hint
+                // to the device to discard the previous content.
+                GL.BufferData(BufferTarget.ArrayBuffer,
+                              (IntPtr)bufferSize,
+                              IntPtr.Zero,
+                              _isDynamic ? BufferUsageHint.StreamDraw : BufferUsageHint.StaticDraw);
+                GraphicsExtensions.CheckGLError();
+            }
+
+            // there are no gaps so we can copy in one go
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)targetOffsetInBytes, (IntPtr)lengthInBytes, (IntPtr)data);
+            GraphicsExtensions.CheckGLError();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (!IsDisposed)
