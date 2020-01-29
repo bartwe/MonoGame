@@ -70,6 +70,20 @@ namespace Microsoft.Xna.Framework.Graphics
 #endif
         }
 
+        private unsafe void PlatformSetData(int level,
+                             int left, int top, int right, int bottom, int front, int back,
+                             void* data, int width, int height, int depth) {
+#if GLES
+            throw new NotSupportedException("OpenGL ES 2.0 doesn't support 3D textures.");
+#else
+            Threading.EnsureUIThread();
+            GL.BindTexture(glTarget, glTexture);
+            GraphicsExtensions.CheckGLError();
+            GL.TexSubImage3D(glTarget, level, left, top, front, width, height, depth, glFormat, glType, (IntPtr)data);
+            GraphicsExtensions.CheckGLError();
+#endif
+        }
+
         private void PlatformGetData<T>(int level, int left, int top, int right, int bottom, int front, int back, T[] data, int startIndex, int elementCount)
              where T : struct
         {

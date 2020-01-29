@@ -177,7 +177,8 @@ namespace Microsoft.Xna.Framework.Graphics
 		}
 
         public unsafe void SetDataEXT(void* data, int targetOffsetInBytes, int lengthInBytes, SetDataOptions options) {
-            PlatformSetDataInternal(data, targetOffsetInBytes, lengthInBytes, options);
+            var bufferSize = VertexCount * VertexDeclaration.VertexStride;
+            PlatformSetDataInternal(data, targetOffsetInBytes, lengthInBytes, bufferSize, options);
         }
 
         /// <summary>
