@@ -211,6 +211,40 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
+        public unsafe void PlatformSetDataInternal(void* data, int targetOffsetInBytes, int lengthInBytes, SetDataOptions options) {
+            GenerateIfRequired();
+
+            if (_isDynamic) {
+                // We assume discard by default.
+                var mode = SharpDX.Direct3D11.MapMode.WriteDiscard;
+                if ((options & SetDataOptions.NoOverwrite) == SetDataOptions.NoOverwrite)
+                    mode = SharpDX.Direct3D11.MapMode.WriteNoOverwrite;
+
+                var d3dContext = GraphicsDevice._d3dContext;
+                lock (d3dContext) {
+                    var dataBox = d3dContext.MapSubresource(_buffer, 0, mode, SharpDX.Direct3D11.MapFlags.None);
+                    SharpDX.Utilities.CopyMemory(dataBox.DataPointer + targetOffsetInBytes, (IntPtr)data, lengthInBytes);
+                    d3dContext.UnmapSubresource(_buffer, 0);
+                }
+            }
+            else {
+                var d3dContext = GraphicsDevice._d3dContext;
+
+                var box = new SharpDX.DataBox((IntPtr)data, lengthInBytes, 0);
+
+                var region = new SharpDX.Direct3D11.ResourceRegion();
+                region.Top = 0;
+                region.Front = 0;
+                region.Back = 1;
+                region.Bottom = 1;
+                region.Left = targetOffsetInBytes;
+                region.Right = targetOffsetInBytes + lengthInBytes;
+
+                lock (d3dContext)
+                    d3dContext.UpdateSubresource(box, _buffer, 0, region);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
