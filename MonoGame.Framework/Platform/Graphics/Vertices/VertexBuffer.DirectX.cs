@@ -223,7 +223,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-        public unsafe void PlatformSetDataInternal(void* data, int targetOffsetInBytes, int lengthInBytes, SetDataOptions options) {
+        public unsafe void PlatformSetDataInternal(void* data, int targetOffsetInBytes, int lengthInBytes, int bufferSize, SetDataOptions options) {
             GenerateIfRequired();
 
             if (_isDynamic) {
