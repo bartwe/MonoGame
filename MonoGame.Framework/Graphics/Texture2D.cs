@@ -161,7 +161,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             Rectangle checkedRect;
             ValidateParams(level, 0, rect, data, startIndex, elementCount, out checkedRect);
-            PlatformSetData(level, 0, checkedRect, data, startIndex, elementCount);
+                PlatformSetData(level, 0, checkedRect, data, startIndex, elementCount);
         }
         /// <summary>
         /// Changes the texture's pixels
@@ -187,6 +187,11 @@ namespace Microsoft.Xna.Framework.Graphics
             ValidateParams(0, 0, null, data, 0, data.Length, out checkedRect);
             PlatformSetData(0, data, 0, data.Length);
         }
+
+        public void SetDataEXT(int level, int arraySlice, Rectangle rect, IntPtr data, int dataSizeInBytes) {
+            this.PlatformSetDataEXT(level, arraySlice, rect, data, dataSizeInBytes);
+        }
+
         /// <summary>
         /// Retrieves the contents of the texture
         /// Throws ArgumentException if data is null, data.length is too short or
