@@ -107,6 +107,23 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
+        private unsafe void PlatformSetDataEXT(int level, int arraySlice, Rectangle rect, IntPtr data, int dataLengthInBytes)
+        {
+            var region = new ResourceRegion();
+            region.Top = rect.Top;
+            region.Front = 0;
+            region.Back = 1;
+            region.Bottom = rect.Bottom;
+            region.Left = rect.Left;
+            region.Right = rect.Right;
+
+            // TODO: We need to deal with threaded contexts here!
+            var subresourceIndex = CalculateSubresourceIndex(arraySlice, level);
+            var d3dContext = GraphicsDevice._d3dContext;
+            lock (d3dContext)
+                d3dContext.UpdateSubresource(GetTexture(), subresourceIndex, region, data, GetPitch(rect.Width), 0);
+        }
+
         private void PlatformGetData<T>(int level, int arraySlice, Rectangle rect, T[] data, int startIndex, int elementCount) where T : struct
         {
             // Create a temp staging resource for copying the data.
