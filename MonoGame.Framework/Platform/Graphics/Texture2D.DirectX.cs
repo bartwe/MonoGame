@@ -108,7 +108,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-        private unsafe void PlatformSetDataEXT(int level, int arraySlice, Rectangle rect, IntPtr data)
+        private unsafe void PlatformSetDataEXT(int level, int arraySlice, Rectangle rect, IntPtr data, int dataLengthInBytes)
         {
             var region = new ResourceRegion();
             region.Top = rect.Top;
