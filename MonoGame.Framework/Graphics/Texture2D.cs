@@ -205,6 +205,10 @@ namespace Microsoft.Xna.Framework.Graphics
             PlatformSetData(0, data, 0, data.Length);
         }
 
+        public void SetDataEXT(int level, int arraySlice, Rectangle rect, IntPtr data) {
+            this.PlatformSetDataEXT(level, arraySlice, rect, data);
+        }
+
         /// <summary>
         /// Retrieves the contents of the texture
         /// Throws ArgumentException if data is null, data.length is too short or
