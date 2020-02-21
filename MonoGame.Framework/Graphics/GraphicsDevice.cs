@@ -106,14 +106,6 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
         internal Dictionary<int, Effect> EffectCache;
 
-        // Resources may be added to and removed from the list from many threads.
-        private readonly object _resourcesLock = new object();
-
-        // Use WeakReference for the global resources list as we do not know when a resource
-        // may be disposed and collected. We do not want to prevent a resource from being
-        // collected by holding a strong reference to it in this list.
-        private readonly List<WeakReference> _resources = new List<WeakReference>();
-
 		// TODO Graphics Device events need implementing
 		public event EventHandler<EventArgs> DeviceLost;
 		public event EventHandler<EventArgs> DeviceReset;
@@ -529,18 +521,6 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 if (disposing)
                 {
-                    // Dispose of all remaining graphics resources before disposing of the graphics device
-                    lock (_resourcesLock)
-                    {
-                        foreach (var resource in _resources.ToArray())
-                        {
-                            var target = resource.Target as IDisposable;
-                            if (target != null)
-                                target.Dispose();
-                        }
-                        _resources.Clear();
-                    }
-
                     // Clear the effect cache.
                     EffectCache.Clear();
 
@@ -568,22 +548,6 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 _isDisposed = true;
                 EventHelpers.Raise(this, Disposing, EventArgs.Empty);
-            }
-        }
-
-        internal void AddResourceReference(WeakReference resourceReference)
-        {
-            lock (_resourcesLock)
-            {
-                _resources.Add(resourceReference);
-            }
-        }
-
-        internal void RemoveResourceReference(WeakReference resourceReference)
-        {
-            lock (_resourcesLock)
-            {
-                _resources.Remove(resourceReference);
             }
         }
 
@@ -634,19 +598,6 @@ namespace Microsoft.Xna.Framework.Graphics
         internal void OnDeviceResetting()
         {
             EventHelpers.Raise(this, DeviceResetting, EventArgs.Empty);
-
-            lock (_resourcesLock)
-            {
-                foreach (var resource in _resources)
-                {
-                    var target = resource.Target as GraphicsResource;
-                    if (target != null)
-                        target.GraphicsDeviceResetting();
-                }
-
-                // Remove references to resources that have been garbage collected.
-                _resources.RemoveAll(wr => !wr.IsAlive);
-            }
         }
 
         /// <summary>

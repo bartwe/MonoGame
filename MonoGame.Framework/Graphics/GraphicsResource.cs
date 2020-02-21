@@ -52,8 +52,6 @@ namespace Microsoft.Xna.Framework.Graphics
         // disposed yet.
         GraphicsDevice graphicsDevice;
 
-        private WeakReference _selfReference;
-
         internal GraphicsResource()
         {
             
@@ -106,11 +104,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 if (disposing)
                     EventHelpers.Raise(this, Disposing, EventArgs.Empty);
 
-                // Remove from the global list of graphics resources
-                if (graphicsDevice != null)
-                    graphicsDevice.RemoveResourceReference(_selfReference);
 
-                _selfReference = null;
                 graphicsDevice = null;
                 disposed = true;
             }
@@ -132,18 +126,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 if (graphicsDevice == value)
                     return;
 
-                // VertexDeclaration objects can be bound to multiple GraphicsDevice objects
-                // during their lifetime. But only one GraphicsDevice should retain ownership.
-                if (graphicsDevice != null)
-                {
-                    graphicsDevice.RemoveResourceReference(_selfReference);
-                    _selfReference = null;
-                }
-
                 graphicsDevice = value;
-
-                _selfReference = new WeakReference(this);
-                graphicsDevice.AddResourceReference(_selfReference);
             }
 		}
 		
