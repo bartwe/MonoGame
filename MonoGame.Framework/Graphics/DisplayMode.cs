@@ -113,7 +113,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public override int GetHashCode()
         {
-            return (this.width.GetHashCode() ^ this.height.GetHashCode() ^ this.format.GetHashCode());
+            return (this.width.GetHashCode() ^ this.height.GetHashCode() ^ ((int)this.format).GetHashCode());
         }
 
         public override string ToString()
