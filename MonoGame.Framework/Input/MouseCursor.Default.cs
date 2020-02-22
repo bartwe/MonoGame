@@ -9,7 +9,7 @@ namespace Microsoft.Xna.Framework.Input
 {
     public partial class MouseCursor
     {
-        private static void PlatformInitalize()
+        private static void PlatformInitialize()
         {
             Arrow = new MouseCursor(IntPtr.Zero);
             IBeam = new MouseCursor(IntPtr.Zero);
