@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using MonoGame.Utilities;
 using System.Runtime.InteropServices;
 
@@ -136,7 +137,7 @@ namespace Microsoft.Xna.Framework.Graphics
         // Use WeakReference for the global resources list as we do not know when a resource
         // may be disposed and collected. We do not want to prevent a resource from being
         // collected by holding a strong reference to it in this list.
-        private readonly List<WeakReference> _resources = new List<WeakReference>();
+        private readonly HashSet<WeakReference> _resources = new HashSet<WeakReference>();
 
 		// TODO Graphics Device events need implementing
 		public event EventHandler<EventArgs> DeviceLost;
@@ -588,7 +589,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     // Dispose of all remaining graphics resources before disposing of the graphics device
                     lock (_resourcesLock)
                     {
-                        foreach (var resource in _resources.ToArray())
+                        foreach (var resource in _resources.ToList())
                         {
                             var target = resource.Target as IDisposable;
                             if (target != null)
@@ -694,7 +695,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
             lock (_resourcesLock)
             {
-                foreach (var resource in _resources)
+                foreach (var resource in _resources.ToList())
                 {
                     var target = resource.Target as GraphicsResource;
                     if (target != null)
@@ -702,7 +703,10 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
 
                 // Remove references to resources that have been garbage collected.
-                _resources.RemoveAll(wr => !wr.IsAlive);
+                foreach (var resource in _resources.ToList()) {
+                    if (!resource.IsAlive)
+                        _resources.Remove(resource);
+                }
             }
         }
 
