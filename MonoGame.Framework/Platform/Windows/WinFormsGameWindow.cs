@@ -166,6 +166,9 @@ namespace MonoGame.Framework
             _resizeTickTimer = new System.Timers.Timer(1) { SynchronizingObject = Form, AutoReset = false };
             _resizeTickTimer.Elapsed += OnResizeTick;
 
+
+            Form.Activate();
+
             Form.Activated += OnActivated;
             Form.Deactivate += OnDeactivate;
             Form.Resize += OnResize;
