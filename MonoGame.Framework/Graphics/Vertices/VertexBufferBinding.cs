@@ -88,12 +88,14 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </exception>
         public VertexBufferBinding(VertexBuffer vertexBuffer, int vertexOffset, int instanceFrequency)
         {
+#if DEBUG
             if (vertexBuffer == null)
                 throw new ArgumentNullException("vertexBuffer");
             if (vertexOffset < 0 || vertexOffset >= vertexBuffer.VertexCount)
                 throw new ArgumentOutOfRangeException("vertexOffset");
             if (instanceFrequency < 0)
                 throw new ArgumentOutOfRangeException("instanceFrequency");
+#endif
 
             _vertexBuffer = vertexBuffer;
             _vertexOffset = vertexOffset;

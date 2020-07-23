@@ -45,7 +45,9 @@ namespace Microsoft.Xna.Framework
         /// Represents the value of pi times two(6.28318548).
         /// </summary>
         public const float TwoPi = (float)(Math.PI * 2.0);
-        
+
+        public const float DegreesToRadians = (float)Math.PI / 180;
+
         /// <summary>
         /// Returns the Cartesian coordinate for one axis of a point that is defined by a given triangle and two normalized barycentric (areal) coordinates.
         /// </summary>

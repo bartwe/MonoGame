@@ -173,6 +173,8 @@ namespace TwoMGFX
 
             private string GetPath(Source source)
             {
+                if (source == null)
+                    return "";
                 return ((MGStringLexerSource) source).Path;
             }
 

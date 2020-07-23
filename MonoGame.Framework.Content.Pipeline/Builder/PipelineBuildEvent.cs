@@ -213,7 +213,7 @@ namespace MonoGame.Framework.Content.Pipeline.Builder
             if (!AreParametersEqual(cachedEvent.Parameters, Parameters, defaultValues))
                 return true;
 
-            return false;
+            return true;
         }
 
         internal static bool AreParametersEqual(OpaqueDataDictionary parameters0, OpaqueDataDictionary parameters1, OpaqueDataDictionary defaultValues)

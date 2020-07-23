@@ -155,20 +155,28 @@ namespace Microsoft.Xna.Framework.Graphics
             // over and we need to reset.
             if (_stateKey > EffectParameter.NextStateKey)
                 _stateKey = 0;
-            
-            for (var p = 0; p < _parameters.Length; p++)
+
+            var l_parameters = _parameters;
+            var l_parametersLength = l_parameters.Length;
+            var l_offsets = _offsets;
+            bool dirty = false;
+
+            for (var p = 0; p < l_parametersLength; p++)
             {
-                var index = _parameters[p];
+                var index = l_parameters[p];
                 var param = parameters[index];
 
                 if (param.StateKey < _stateKey)
                     continue;
 
-                var offset = _offsets[p];
-                _dirty = true;
+                var offset = l_offsets[p];
+                dirty = true;
 
                 SetParameter(offset, param);
             }
+
+            if (dirty)
+                _dirty = true;
 
             _stateKey = EffectParameter.NextStateKey;
         }

@@ -161,7 +161,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             Rectangle checkedRect;
             ValidateParams(level, 0, rect, data, startIndex, elementCount, out checkedRect);
-            PlatformSetData(level, 0, checkedRect, data, startIndex, elementCount);
+                PlatformSetData(level, 0, checkedRect, data, startIndex, elementCount);
         }
         /// <summary>
         /// Changes the texture's pixels
@@ -188,8 +188,8 @@ namespace Microsoft.Xna.Framework.Graphics
             PlatformSetData(0, data, 0, data.Length);
         }
 
-        public void SetDataEXT(int level, int arraySlice, Rectangle rect, IntPtr data, int dataLengthInBytes) {
-            this.PlatformSetDataEXT(level, arraySlice, rect, data, dataLengthInBytes);
+        public void SetDataEXT(int level, int arraySlice, Rectangle rect, IntPtr data, int dataSizeInBytes) {
+            this.PlatformSetDataEXT(level, arraySlice, rect, data, dataSizeInBytes);
         }
 
         /// <summary>

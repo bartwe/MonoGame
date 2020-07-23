@@ -193,7 +193,7 @@ namespace Microsoft.Xna.Framework
         public override int GetHashCode()
         {
             return this._position.GetHashCode() ^ this._value.GetHashCode() ^ this._tangentIn.GetHashCode() ^
-                this._tangentOut.GetHashCode() ^ this._continuity.GetHashCode();
+                this._tangentOut.GetHashCode() ^ ((int)this._continuity).GetHashCode();
         } 
 
         #endregion
