@@ -918,7 +918,24 @@ namespace Microsoft.Xna.Framework.Graphics
         [Obsolete("Use DrawIndexedPrimitives(PrimitiveType primitiveType, int baseVertex, int startIndex, int primitiveCount) instead. In future versions this method can be removed.")]
         public void DrawIndexedPrimitives(PrimitiveType primitiveType, int baseVertex, int minVertexIndex, int numVertices, int startIndex, int primitiveCount)
         {
-            DrawIndexedPrimitives(primitiveType, baseVertex, startIndex, primitiveCount);
+            if (_vertexShader == null)
+                throw new InvalidOperationException("Vertex shader must be set before calling DrawIndexedPrimitives.");
+
+            if (_vertexBuffers.Count == 0)
+                throw new InvalidOperationException("Vertex buffer must be set before calling DrawIndexedPrimitives.");
+
+            if (_indexBuffer == null)
+                throw new InvalidOperationException("Index buffer must be set before calling DrawIndexedPrimitives.");
+
+            if (primitiveCount <= 0)
+                throw new ArgumentOutOfRangeException("primitiveCount");
+
+            PlatformDrawIndexedPrimitives(primitiveType, baseVertex, minVertexIndex, numVertices, startIndex, primitiveCount);
+
+            unchecked {
+                _graphicsMetrics._drawCount++;
+                _graphicsMetrics._primitiveCount += primitiveCount;
+            }
         }
 
         /// <summary>
