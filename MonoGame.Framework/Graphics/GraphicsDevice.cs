@@ -930,7 +930,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (primitiveCount <= 0)
                 throw new ArgumentOutOfRangeException("primitiveCount");
 
-            PlatformDrawIndexedPrimitives(primitiveType, baseVertex, minVertexIndex, numVertices, startIndex, primitiveCount);
+            PlatformDrawIndexedPrimitives(primitiveType, baseVertex, startIndex, primitiveCount);
 
             unchecked {
                 _graphicsMetrics._drawCount++;
