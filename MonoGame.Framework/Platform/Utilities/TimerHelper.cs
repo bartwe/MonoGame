@@ -37,11 +37,15 @@ namespace MonoGame.Utilities
         public static void SleepForNoMoreThan(double milliseconds)
         {
             // Assumption is that Thread.Sleep(t) will sleep for at least (t), and at most (t + timerResolution)
-            if (milliseconds < LowestSleepThreshold)
+            if (milliseconds < LowestSleepThreshold) {
+                Thread.Yield();
                 return;
+            }
             var sleepTime = (int)(milliseconds - GetCurrentResolution());
             if (sleepTime > 0)
                 Thread.Sleep(sleepTime);
+            else
+                Thread.Yield();
         }
     }
 }
