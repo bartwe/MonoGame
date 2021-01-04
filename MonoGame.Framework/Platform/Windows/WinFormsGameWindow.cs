@@ -196,7 +196,7 @@ namespace MonoGame.Framework
         internal static extern bool SetCursorPos(int x, int y);
 
         [DllImport("user32.dll", ExactSpelling=true, CharSet=CharSet.Auto)]
-        internal static extern int MapWindowPoints(HandleRef hWndFrom, HandleRef hWndTo, out POINTSTRUCT pt, int cPoints);
+        internal static extern int MapWindowPoints(HandleRef hWndFrom, HandleRef hWndTo, ref POINTSTRUCT pt, int cPoints);
 
         private void SetIcon()
         {
@@ -280,7 +280,7 @@ namespace MonoGame.Framework
 
             POINTSTRUCT pos;
             GetCursorPos(out pos);
-            MapWindowPoints(new HandleRef(null, IntPtr.Zero), new HandleRef(Form, Form.Handle), out pos, 1);
+            MapWindowPoints(new HandleRef(null, IntPtr.Zero), new HandleRef(Form, Form.Handle), ref pos, 1);
             var clientPos = new System.Drawing.Point(pos.X, pos.Y);
             var withinClient = Form.ClientRectangle.Contains(clientPos);
             var buttons = Control.MouseButtons;
@@ -303,7 +303,7 @@ namespace MonoGame.Framework
                 pos.Y = clientPos.Y;
 
                 // move cursor immediatly after reading cursor position to give both the shortest amount of time to lost movement, and the most time for the os to process the update
-                MapWindowPoints(new HandleRef(Form, Form.Handle), new HandleRef(null, IntPtr.Zero), out pos, 1);
+                MapWindowPoints(new HandleRef(Form, Form.Handle), new HandleRef(null, IntPtr.Zero), ref pos, 1);
                 SetCursorPos(pos.X, pos.Y);
             }
 
