@@ -23,7 +23,7 @@
     <OutputPath>bin\Windows\AnyCPU\Debug</OutputPath>
     <IntermediateOutputPath>obj\Windows\AnyCPU\Debug</IntermediateOutputPath>
     <DocumentationFile>bin\Windows\AnyCPU\Debug\MonoGame.Framework.xml</DocumentationFile>
-    <DefineConstants>XNADESIGNPROVIDED;WINDOWS;WINDOWS_MEDIA_SESSION;STBSHARP_INTERNAL;NET45;NET45;WINDOWS;DIRECTX;NET45</DefineConstants>
+    <DefineConstants>DEBUG;XNADESIGNPROVIDED;WINDOWS;WINDOWS_MEDIA_SESSION;STBSHARP_INTERNAL;NET45;NET45;WINDOWS;DIRECTX;NET45;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>

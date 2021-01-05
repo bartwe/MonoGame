@@ -41,20 +41,29 @@
 using System;
 using System.Diagnostics;
 
-namespace Microsoft.Xna.Framework.Graphics
-{
-    public abstract class GraphicsResource : IDisposable
-    {
+namespace Microsoft.Xna.Framework.Graphics {
+    public abstract class GraphicsResource : IDisposable {
         bool disposed;
+
+#if DEBUG
+        string _allocation;
+
+        ~GraphicsResource() {
+            if (!disposed)
+                throw new Exception("GraphicsResource was garbage collected without being disposed. "+ _allocation);
+        }
+#endif
 
         // The GraphicsDevice property should only be accessed in Dispose(bool) if the disposing
         // parameter is true. If disposing is false, the GraphicsDevice may or may not be
         // disposed yet.
         GraphicsDevice graphicsDevice;
 
-        internal GraphicsResource()
-        {
-            
+        internal GraphicsResource() {
+#if DEBUG
+            _allocation = Environment.StackTrace;
+#endif
+
         }
 
         /// <summary>
@@ -63,13 +72,11 @@ namespace Microsoft.Xna.Framework.Graphics
         /// Warning: This may be called after a call to Dispose() up until
         /// the resource is garbage collected.
         /// </summary>
-        internal protected virtual void GraphicsDeviceResetting()
-        {
+        protected internal virtual void GraphicsDeviceResetting() {
 
         }
 
-        public void Dispose()
-        {
+        public void Dispose() {
             // Dispose of managed objects as well
             Dispose(true);
             // Since we have been manually disposed, do not call the finalizer on this object
@@ -81,12 +88,9 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
         /// <param name="disposing">True if managed objects should be disposed.</param>
         /// <remarks>Native resources should always be released regardless of the value of the disposing parameter.</remarks>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
+        protected virtual void Dispose(bool disposing) {
+            if (!disposed) {
+                if (disposing) {
                     // Release managed objects
                     // ...
                 }
@@ -104,38 +108,32 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-		public event EventHandler<EventArgs> Disposing;
-		
-		public GraphicsDevice GraphicsDevice
-		{
-			get
-			{
-				return graphicsDevice;
-			}
+        public event EventHandler<EventArgs> Disposing;
 
-            internal set
-            {
+        public GraphicsDevice GraphicsDevice {
+            get {
+                return graphicsDevice;
+            }
+
+            internal set {
                 Debug.Assert(value != null);
                 graphicsDevice = value;
             }
-		}
-		
-		public bool IsDisposed
-		{
-			get
-			{
-				return disposed;
-			}
-		}
-		
-		public string Name { get; set; }
-		
-		public Object Tag { get; set; }
+        }
 
-        public override string ToString()
-        {
+        public bool IsDisposed {
+            get {
+                return disposed;
+            }
+        }
+
+        public string Name { get; set; }
+
+        public object Tag { get; set; }
+
+        public override string ToString() {
             return string.IsNullOrEmpty(Name) ? base.ToString() : Name;
         }
-	}
+    }
 }
 
