@@ -120,7 +120,7 @@ namespace Microsoft.Xna.Framework.Graphics
             foreach (var sampler in shader.Samplers)
             {
                 var param = _effect.Parameters[sampler.parameter];
-                var texture = param.Data as Texture;
+                var texture = param.DataTexture;
 
                 textures[sampler.textureSlot] = texture;
 
