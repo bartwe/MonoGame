@@ -39,6 +39,7 @@ namespace Microsoft.Xna.Framework.Graphics
             StructureMembers = structMembers;
 
             Data = data;
+		    DataTexture = data as Texture;
             StateKey = unchecked(NextStateKey++);
 		}
 
@@ -87,7 +88,8 @@ namespace Microsoft.Xna.Framework.Graphics
         // and garbage generation.  We should consider a templated
         // type implementation to fix this!
 
-        internal object Data { get; private set; }
+	    internal object Data;
+	    internal Texture DataTexture;
 
         /// <summary>
         /// The current state key which is used to detect
@@ -303,7 +305,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Object || ParameterType != EffectParameterType.Texture2D)
                 throw new InvalidCastException();
 
-			return (Texture2D)Data;
+			return (Texture2D)DataTexture;
 		}
 
 #if !GLES
@@ -312,7 +314,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Object || ParameterType != EffectParameterType.Texture3D)
                 throw new InvalidCastException();
 
-            return (Texture3D)Data;
+            return (Texture3D)DataTexture;
 	    }
 #endif
 
@@ -321,7 +323,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Object || ParameterType != EffectParameterType.TextureCube)
                 throw new InvalidCastException();
 
-            return (TextureCube)Data;
+            return (TextureCube)DataTexture;
 		}
 
 		public Vector2 GetValueVector2 ()
@@ -823,6 +825,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
 
 			Data = value;
+		    DataTexture = value;
             StateKey = unchecked(NextStateKey++);
 		}
 
