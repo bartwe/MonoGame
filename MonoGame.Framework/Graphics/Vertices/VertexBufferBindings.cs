@@ -143,11 +143,11 @@ namespace Microsoft.Xna.Framework.Graphics
         public VertexBufferBinding Get(int slot)
         {
             Debug.Assert(0 <= slot && slot < Count);
-
-            return new VertexBufferBinding(
-                _vertexBuffers[slot],
-                _vertexOffsets[slot],
-                InstanceFrequencies[slot]);
+            VertexBufferBinding result;
+            result.VertexBuffer = _vertexBuffers[slot];
+            result.VertexOffset = _vertexOffsets[slot];
+            result.InstanceFrequency = InstanceFrequencies[slot];
+            return result;
         }
 
         /// <summary>
