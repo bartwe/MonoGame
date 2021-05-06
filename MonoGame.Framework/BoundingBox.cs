@@ -221,8 +221,75 @@ namespace Microsoft.Xna.Framework
             }
         }
 
-        private static readonly Vector3 MaxVector3 = new Vector3(float.MaxValue);
-        private static readonly Vector3 MinVector3 = new Vector3(float.MinValue);
+        private static Vector3 MaxVector3 = new Vector3(float.MaxValue);
+        private static Vector3 MinVector3 = new Vector3(float.MinValue);
+
+
+        /// <summary>
+        /// Create a bounding box from the given list of points.
+        /// </summary>
+        /// <param name="points">The array of Vector3 instances defining the point cloud to bound</param>
+        /// <param name="index">The base index to start iterating from</param>
+        /// <param name="count">The number of points to iterate</param>
+        /// <returns>A bounding box that encapsulates the given point cloud.</returns>
+        /// <exception cref="System.ArgumentException">Thrown if the given array is null or has no points.</exception>
+        public static BoundingBox CreateFromPoints(Vector3[] points, int index = 0, int count = -1)
+        {
+            if (points == null || points.Length == 0)
+                throw new ArgumentException();
+
+            if (count == -1)
+                count = points.Length;
+
+            var minVec = MaxVector3;
+            var maxVec = MinVector3;
+            for (int i = index; i < count; i++)
+            {                
+                minVec.X = (minVec.X < points[i].X) ? minVec.X : points[i].X;
+                minVec.Y = (minVec.Y < points[i].Y) ? minVec.Y : points[i].Y;
+                minVec.Z = (minVec.Z < points[i].Z) ? minVec.Z : points[i].Z;
+
+                maxVec.X = (maxVec.X > points[i].X) ? maxVec.X : points[i].X;
+                maxVec.Y = (maxVec.Y > points[i].Y) ? maxVec.Y : points[i].Y;
+                maxVec.Z = (maxVec.Z > points[i].Z) ? maxVec.Z : points[i].Z;
+            }
+
+            return new BoundingBox(minVec, maxVec);
+        }
+
+
+        /// <summary>
+        /// Create a bounding box from the given list of points.
+        /// </summary>
+        /// <param name="points">The list of Vector3 instances defining the point cloud to bound</param>
+        /// <param name="index">The base index to start iterating from</param>
+        /// <param name="count">The number of points to iterate</param>
+        /// <returns>A bounding box that encapsulates the given point cloud.</returns>
+        /// <exception cref="System.ArgumentException">Thrown if the given list is null or has no points.</exception>
+        public static BoundingBox CreateFromPoints(List<Vector3> points, int index = 0, int count = -1)
+        {
+            if (points == null || points.Count == 0)
+                throw new ArgumentException();
+
+            if (count == -1)
+                count = points.Count;
+
+            var minVec = MaxVector3;
+            var maxVec = MinVector3;
+            for (int i = index; i < count; i++)
+            {
+                minVec.X = (minVec.X < points[i].X) ? minVec.X : points[i].X;
+                minVec.Y = (minVec.Y < points[i].Y) ? minVec.Y : points[i].Y;
+                minVec.Z = (minVec.Z < points[i].Z) ? minVec.Z : points[i].Z;
+
+                maxVec.X = (maxVec.X > points[i].X) ? maxVec.X : points[i].X;
+                maxVec.Y = (maxVec.Y > points[i].Y) ? maxVec.Y : points[i].Y;
+                maxVec.Z = (maxVec.Z > points[i].Z) ? maxVec.Z : points[i].Z;
+            }
+
+            return new BoundingBox(minVec, maxVec);
+        }
+
 
         /// <summary>
         /// Create a bounding box from the given list of points.
@@ -417,7 +484,15 @@ namespace Microsoft.Xna.Framework
 
         public void Intersects(ref BoundingSphere sphere, out bool result)
         {
-            result = Intersects(sphere);
+            var squareDistance = 0.0f;
+            var point = sphere.Center;
+            if (point.X < Min.X) squareDistance += (Min.X - point.X) * (Min.X - point.X);
+            if (point.X > Max.X) squareDistance += (point.X - Max.X) * (point.X - Max.X);
+            if (point.Y < Min.Y) squareDistance += (Min.Y - point.Y) * (Min.Y - point.Y);
+            if (point.Y > Max.Y) squareDistance += (point.Y - Max.Y) * (point.Y - Max.Y);
+            if (point.Z < Min.Z) squareDistance += (Min.Z - point.Z) * (Min.Z - point.Z);
+            if (point.Z > Max.Z) squareDistance += (point.Z - Max.Z) * (point.Z - Max.Z);
+            result = squareDistance <= sphere.Radius * sphere.Radius;
         }
 
         public PlaneIntersectionType Intersects(Plane plane)
@@ -520,6 +595,17 @@ namespace Microsoft.Xna.Framework
         public override string ToString()
         {
             return "{{Min:" + this.Min.ToString() + " Max:" + this.Max.ToString() + "}}";
+        }
+
+        /// <summary>
+        /// Deconstruction method for <see cref="BoundingBox"/>.
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        public void Deconstruct(out Vector3 min, out Vector3 max)
+        {
+            min = Min;
+            max = Max;
         }
 
         #endregion Public Methods

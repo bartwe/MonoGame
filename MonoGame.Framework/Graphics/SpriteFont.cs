@@ -275,7 +275,7 @@ namespace Microsoft.Xna.Framework.Graphics
             /// </summary>
             public float WidthIncludingBearings;
 
-			public static readonly Glyph Empty = new Glyph();
+			public static Glyph Empty = new Glyph();
 
 			public override string ToString ()
 			{

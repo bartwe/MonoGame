@@ -22,7 +22,7 @@ namespace Microsoft.Xna.Framework.Input
 #endif
 
         internal readonly Buttons _virtualButtons;
-        private readonly Vector2 _left, _right;
+        private Vector2 _left, _right;
 
         /// <summary>
         /// Gets a value indicating the position of the left stick (thumbstick). 

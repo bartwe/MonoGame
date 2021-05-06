@@ -41,9 +41,9 @@ namespace Microsoft.Xna.Framework.Audio
         private float _clipPitch;
         private float _clipReverbMix;
 
-        private readonly Vector4? _filterVar;
-        private readonly Vector2? _volumeVar;
-        private readonly Vector2? _pitchVar;
+        private Vector4? _filterVar;
+        private Vector2? _volumeVar;
+        private Vector2? _pitchVar;
 
         private int _wavIndex;
         private int _loopIndex;

@@ -29,8 +29,8 @@ namespace Microsoft.Xna.Framework.Media
 
         private static Guid AudioStreamVolumeGuid;
 
-        private static readonly Variant PositionCurrent = new Variant();
-        private static readonly Variant PositionBeginning = new Variant { ElementType = VariantElementType.Long, Value = 0L };
+        private static Variant PositionCurrent = new Variant();
+        private static Variant PositionBeginning = new Variant { ElementType = VariantElementType.Long, Value = 0L };
 
         private static Callback _callback;
 
