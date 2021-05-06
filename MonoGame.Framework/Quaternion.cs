@@ -17,7 +17,7 @@ namespace Microsoft.Xna.Framework
     {
         #region Private Fields
 
-        private static readonly Quaternion _identity = new Quaternion(0, 0, 0, 1);
+        private static Quaternion _identity = new Quaternion(0, 0, 0, 1);
 
         #endregion
 

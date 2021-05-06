@@ -28,7 +28,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
         public bool IsConnected { get { return TouchPanel.GetCapabilities().IsConnected; } }
 
         private static readonly TouchLocation[] EmptyLocationArray = new TouchLocation[0];
-        internal static readonly TouchCollection Empty = new TouchCollection(EmptyLocationArray);
+        internal static TouchCollection Empty = new TouchCollection(EmptyLocationArray);
 
 		#endregion
 
@@ -226,7 +226,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
         /// </summary>
         public struct Enumerator : IEnumerator<TouchLocation>
         {
-            private readonly TouchCollection _collection;
+            private TouchCollection _collection;
             private int _position;
 
             internal Enumerator(TouchCollection collection)

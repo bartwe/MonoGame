@@ -20,12 +20,12 @@ namespace Microsoft.Xna.Framework
     {
         #region Private Fields
 
-        private static readonly Vector4 zero = new Vector4();
-        private static readonly Vector4 one = new Vector4(1f, 1f, 1f, 1f);
-        private static readonly Vector4 unitX = new Vector4(1f, 0f, 0f, 0f);
-        private static readonly Vector4 unitY = new Vector4(0f, 1f, 0f, 0f);
-        private static readonly Vector4 unitZ = new Vector4(0f, 0f, 1f, 0f);
-        private static readonly Vector4 unitW = new Vector4(0f, 0f, 0f, 1f);
+        private static Vector4 zero = new Vector4();
+        private static Vector4 one = new Vector4(1f, 1f, 1f, 1f);
+        private static Vector4 unitX = new Vector4(1f, 0f, 0f, 0f);
+        private static Vector4 unitY = new Vector4(0f, 1f, 0f, 0f);
+        private static Vector4 unitZ = new Vector4(0f, 0f, 1f, 0f);
+        private static Vector4 unitW = new Vector4(0f, 0f, 0f, 1f);
 
         #endregion
 

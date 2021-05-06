@@ -5774,7 +5774,7 @@ namespace MonoGame.Utilities
         #endregion
 
 
-        internal static readonly System.DateTime _unixEpoch = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        internal static System.DateTime _unixEpoch = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         internal static readonly System.Text.Encoding iso8859dash1 = new Iso88591Encoding();
 
         private int EmitHeader()

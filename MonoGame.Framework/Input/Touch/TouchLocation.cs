@@ -77,7 +77,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
         /// <summary>
         /// Helper for assigning an invalid touch location.
         /// </summary>
-        internal static readonly TouchLocation Invalid = new TouchLocation();
+        internal static TouchLocation Invalid = new TouchLocation();
 
 		#region Properties
 

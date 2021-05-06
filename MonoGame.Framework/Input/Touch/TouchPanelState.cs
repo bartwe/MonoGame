@@ -344,7 +344,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
         /// </summary>
         internal const float TapJitterTolerance = 35.0f;
 
-        internal static readonly TimeSpan TimeRequiredForHold = TimeSpan.FromMilliseconds(1024);
+        internal static TimeSpan TimeRequiredForHold = TimeSpan.FromMilliseconds(1024);
 
         /// <summary>
         /// The pinch touch locations.
