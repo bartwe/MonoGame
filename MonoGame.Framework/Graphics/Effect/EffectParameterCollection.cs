@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -46,7 +47,13 @@ namespace Microsoft.Xna.Framework.Graphics
 						return parameter;
 				}
 
-				return null;
+                /*
+                Console.Error.WriteLine("Failed to find EffectParameter named: "+name);
+                foreach (var parameter in _parameters) {
+                    Console.Error.WriteLine("> "+parameter.Name);
+                }
+                */
+                return null;
 			}
         }
 
