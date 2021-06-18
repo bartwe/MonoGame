@@ -1337,7 +1337,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 if (buffer != null)
                     buffer.Dispose();
 
-                buffer = new DynamicVertexBuffer(this, vertexDecl, Math.Max(vertexCount, 86016 / vertexDecl.VertexStride), BufferUsage.WriteOnly);
+                buffer = new DynamicVertexBuffer(this, vertexDecl, Math.Max(vertexCount, 131072 / vertexDecl.VertexStride), BufferUsage.WriteOnly);
                 _userVertexBuffers[vertexDecl] = buffer;
             }
 
